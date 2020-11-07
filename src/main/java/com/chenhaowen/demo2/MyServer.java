@@ -1,4 +1,4 @@
-package com.chenhaowen.demo;
+package com.chenhaowen.demo2;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -8,22 +8,19 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
  * @author chenhaowen
- * @description
- * @date 11/6/20  6:23 PM
+ * @Description:
+ * @date 2020/11/7 9:51 下午
  */
-public class NettyServerTest {
+public class MyServer {
 
-    public static void main(String[] args) throws Exception {
-        // 定义两个时间循环组
-        // 获取连接
+    public static void main(String[] args) throws InterruptedException {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
-        // 具体处理
         EventLoopGroup workerGroup = new NioEventLoopGroup();
+
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class)
-                    .childHandler(new TestServerInitializer());
+            serverBootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
+                    .childHandler(new MyServerInitializer());
             ChannelFuture channelFuture = serverBootstrap.bind(8899).sync();
             channelFuture.channel().closeFuture().sync();
         } finally {
